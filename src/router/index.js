@@ -10,6 +10,8 @@ import RegisterForm from "@/views/users/RegisterForm.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import CreateCategory from '@/views/categories/CreateCategory.vue'; // Importimi i komponentit CreateCategory
 import MovieView from "@/views/users/MovieView.vue";
+import UsersList from '@/views/admin/UsersList.vue';
+import EditUser from '@/views/admin/EditUser.vue';
 
 // Funksioni që kontrollon nëse përdoruesi është admin dhe ka token
 function isAuthenticated() {
@@ -94,6 +96,30 @@ const routes = [
         path: '/movies/create', 
         name: 'CreateMovie', 
         component: CreateMovie,
+        beforeEnter: (to, from, next) => {
+            if (!isAuthenticated() || !isAdmin()) {
+                next('/login'); // Drejtoje te login nëse përdoruesi nuk është i loguar ose nuk është admin
+            } else {
+                next(); // Lejo hyrjen nëse është i loguar dhe admin
+            }
+        }
+    },
+    { 
+        path: '/users', 
+        name: 'UsersList', 
+        component: UsersList,
+        beforeEnter: (to, from, next) => {
+            if (!isAuthenticated() || !isAdmin()) {
+                next('/login'); // Drejtoje te login nëse përdoruesi nuk është i loguar ose nuk është admin
+            } else {
+                next(); // Lejo hyrjen nëse është i loguar dhe admin
+            }
+        }
+    },
+    { 
+        path: '/users/:id/edit', 
+        name: 'EditUser', 
+        component: EditUser,
         beforeEnter: (to, from, next) => {
             if (!isAuthenticated() || !isAdmin()) {
                 next('/login'); // Drejtoje te login nëse përdoruesi nuk është i loguar ose nuk është admin

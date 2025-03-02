@@ -13,6 +13,9 @@
         <li>
           <router-link to="/Movies">Movies</router-link>
         </li>
+        <li>
+          <router-link to="/users">Users</router-link>
+        </li>
       </ul>
     </div>
   </template>
